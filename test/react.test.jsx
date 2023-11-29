@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 
 // fireEvent no es recomendao para testear la ui, se suele utilizar la libreria user-event ya que simula el comportamiento del usuario
@@ -7,58 +7,45 @@ import { fireEvent } from '@testing-library/react';
 import Calculadora, { operaciones, numeros, signoIgual } from '../src/Calculadora';
 
 describe('Calculadora', () => {
-	// afterEach es una funcion que ejecuta la funcion que se le pase por parametro antes de cada test ("it", "test")
-	afterEach(cleanup); // cleanup es una funcion de testing-library, la cual limpia el falso dom
-
-	it('Esta definido el componente', () => {
-		render(<Calculadora />);
+	// Esta funcion ejecuta la funcion que se le pase por parametro antes de cada test ("it", "test")
+	beforeEach(() => {
+		render(<Calculadora />); // Estoy renderizando antes de cada test el componente Calculadora, ya que lo estoy testeando y me ahorro escribir este render siempre
 	});
 
-	it('Se renderiza el titulo del componente', () => {
-		render(<Calculadora />);
+	// Esta funcion ejecuta la funcion que se le pase por parametro luego de cada test ("it", "test")
+	afterEach(cleanup); // cleanup es una funcion de testing-library, la cual limpia el falso dom
 
+	it('Se renderiza el titulo del componente', () => {
 		screen.getByText('Calculadora');
 	});
 
 	it('Se renderiza los numeros en la calculadora', () => {
-		render(<Calculadora />);
-
 		numeros.forEach((numero) => {
 			screen.getByText(numero);
 		});
 	});
 
 	it('Hay 4 filas', () => {
-		render(<Calculadora />);
-
 		const rows = screen.getAllByRole('row');
 
 		expect(rows.length).toBe(4);
 	});
 
 	it('Se renderizan las 4 operaciones basicas', () => {
-		render(<Calculadora />);
-
 		operaciones.forEach((operacion) => {
 			screen.getByText(operacion);
 		});
 	});
 
 	it('Se renderiza el signo igual', () => {
-		render(<Calculadora />);
-
 		screen.getByText(signoIgual);
 	});
 
 	it('Se encuentra el input de texto', () => {
-		render(<Calculadora />);
-
 		screen.getByRole('textbox');
 	});
 
 	it('Al clickear un numero, este debe salir en el input', () => {
-		render(<Calculadora />);
-
 		const botonUno = screen.getByText('1');
 		fireEvent.click(botonUno);
 
@@ -67,8 +54,6 @@ describe('Calculadora', () => {
 	});
 
 	it('Al clickear varios numeros, estos deben salir en el input', () => {
-		render(<Calculadora />);
-
 		const botonUno = screen.getByText('1');
 		fireEvent.click(botonUno);
 		const botonDos = screen.getByText('2');
@@ -83,8 +68,6 @@ describe('Calculadora', () => {
 	});
 
 	it('Al clickear numeros y operaciones, estos deben salir en el input', () => {
-		render(<Calculadora />);
-
 		const botonUno = screen.getByText('1');
 		fireEvent.click(botonUno);
 
@@ -98,8 +81,6 @@ describe('Calculadora', () => {
 	});
 
 	it('Al apretar el signo igual, se debe mostrar el resultado de calcular lo escrito por el usuario en el input', () => {
-		render(<Calculadora />);
-
 		const botonUno = screen.getByText('1');
 		fireEvent.click(botonUno);
 
