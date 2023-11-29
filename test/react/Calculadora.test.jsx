@@ -4,7 +4,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 // fireEvent no es recomendao para testear la ui, se suele utilizar la libreria user-event ya que simula el comportamiento del usuario
 import { fireEvent } from '@testing-library/react';
 
-import Calculadora, { operaciones, numeros, signoIgual } from '../src/Calculadora';
+import Calculadora, { operaciones, numeros, signoIgual } from '../../src/Calculadora';
 
 describe('Calculadora', () => {
 	// Esta funcion ejecuta la funcion que se le pase por parametro antes de cada test ("it", "test")
